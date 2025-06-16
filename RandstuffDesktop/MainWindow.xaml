@@ -1,0 +1,19 @@
+﻿<Window x:Class="RandstuffDesktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RandstuffDesktop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#EEE" HorizontalAlignment="Left">
+            <Button Content="шутки" Click="Navigate_Joke" Margin="10,5" Padding="10,5"/>
+            <Button Content="факты" Click="Navigate_Fact" Margin="10,5" Padding="10,5"/>
+            <Button Content="мудрости" Click="Navigate_Wisdom" Margin="10,5" Padding="10,5"/>
+            <Button Content="вопросы" Click="Navigate_Question" Margin="10,5" Padding="10,5"/>
+            <Button Content="предсказания" Click="Navigate_Ask" Margin="10,5" Padding="10,5"/>
+        </StackPanel>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"></Frame>
+    </DockPanel>
+</Window>
