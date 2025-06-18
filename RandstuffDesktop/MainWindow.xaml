@@ -4,16 +4,76 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RandstuffDesktop"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <DockPanel>
-        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="#EEE" HorizontalAlignment="Left">
-            <Button Content="шутки" Click="Navigate_Joke" Margin="10,5" Padding="10,5"/>
-            <Button Content="факты" Click="Navigate_Fact" Margin="10,5" Padding="10,5"/>
-            <Button Content="мудрости" Click="Navigate_Wisdom" Margin="10,5" Padding="10,5"/>
-            <Button Content="вопросы" Click="Navigate_Question" Margin="10,5" Padding="10,5"/>
-            <Button Content="предсказания" Click="Navigate_Ask" Margin="10,5" Padding="10,5"/>
-        </StackPanel>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"></Frame>
-    </DockPanel>
+        Title="Randstuff" Height="550" Width="800"
+        Background="#E8F5E9"
+        FontFamily="{StaticResource CustomFontFamily}"
+        materialDesign:ColorZoneAssist.Mode="PrimaryDark">
+
+    <materialDesign:DrawerHost>
+        <materialDesign:DrawerHost.LeftDrawerContent>
+            <StackPanel Background="#C8E6C9">
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Number" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Numeric" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Числа" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Password" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="FormTextboxPassword" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Пароли" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Ask" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CrystalBall" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Прогнозы" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Question" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="CommentQuestion" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Вопросы" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Ticket" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Ticket" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Билеты" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Fact" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Information" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Факты" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Wisdom" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Lightbulb" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Мудрости" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Style="{StaticResource RoundedButton}" Margin="10" Click="Navigate_Joke" Background="#A5D6A7">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Emoticon" Margin="0,0,8,0" Foreground="Black"/>
+                        <TextBlock Text="Шутки" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </materialDesign:DrawerHost.LeftDrawerContent>
+
+        <Grid>
+            <DockPanel Background="#E8F5E9">
+                <ToolBar DockPanel.Dock="Top" Background="#C8E6C9">
+                    <Button Style="{StaticResource RoundedButton}" Margin="10" Command="materialDesign:DrawerHost.OpenDrawerCommand" Background="#A5D6A7">
+                        <materialDesign:PackIcon Kind="Menu" Foreground="Black"/>
+                    </Button>
+                </ToolBar>
+                <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+            </DockPanel>
+        </Grid>
+    </materialDesign:DrawerHost>
 </Window>

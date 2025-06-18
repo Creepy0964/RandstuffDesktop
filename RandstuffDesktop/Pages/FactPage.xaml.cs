@@ -20,23 +20,25 @@ namespace RandstuffDesktop.Pages
     /// </summary>
     public partial class FactPage : Page
     {
-        Randstuff rnd = new Randstuff();
+        private Randstuff _randstuff = new Randstuff();
+
         public FactPage()
         {
             InitializeComponent();
-            Update();
-        }
-        
-        async void Update()
-        {
-            var text = await rnd.GetRandomFact();
-
-            fText.Text = text;
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            Update();
+            ResultTextBox.Text = "Загрузка...";
+            try
+            {
+                string joke = await _randstuff.GetRandomFact();
+                ResultTextBox.Text = joke;
+            }
+            catch (Exception ex)
+            {
+                ResultTextBox.Text = "Ошибка: " + ex.Message;
+            }
         }
     }
 }

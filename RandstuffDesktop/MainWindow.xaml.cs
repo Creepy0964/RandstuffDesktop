@@ -24,11 +24,10 @@ namespace RandstuffDesktop;
 /// </summary>
 public partial class MainWindow : Window
 {
-    Randstuff rnd = new Randstuff();
     public MainWindow()
     {
         InitializeComponent();
-        MainFrame.Navigate(new JokePage());
+        MainFrame.Navigate(new NumberPage());
     }
 
     private void Navigate_Joke(object sender, RoutedEventArgs e)
@@ -51,10 +50,23 @@ public partial class MainWindow : Window
         MainFrame.Navigate(new AskPage());
     }
 
-    async private void Navigate_Question(object sender, RoutedEventArgs e)
+    private void Navigate_Question(object sender, RoutedEventArgs e)
     {
-        var text = await rnd.GetRandomNumber(count: 5);
+        MainFrame.Navigate(new QuestionPage());
+    }
 
-        MessageBox.Show(text);
+    private void Navigate_Number(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new NumberPage());
+    }
+
+    private void Navigate_Password(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new PasswordPage());
+    }
+
+    private void Navigate_Ticket(object sender, RoutedEventArgs e)
+    {
+        MainFrame.Navigate(new TicketPage());
     }
 }

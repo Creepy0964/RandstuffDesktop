@@ -12,6 +12,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Security.Policy;
 using System.Runtime.InteropServices.Marshalling;
+using static RandstuffDesktop.Randstuff;
+using System.Windows.Shell;
 
 namespace RandstuffDesktop
 {
@@ -93,12 +95,21 @@ namespace RandstuffDesktop
             return jsonJoke.question;
         }
 
+        public async Task<Answer> GetRandomAnswer(int id, int answer)
+        {
+            var joke = await RunCurl($"--request POST --data \"id={id}&answer={answer}\" https://randstuff.ru/question/answer/");
+
+            var jsonJoke = JsonSerializer.Deserialize<AnswerResp>(joke);
+
+            return jsonJoke.answer;
+        }
+
         public async Task<string> GetRandomNumber(int count = 1, int start = 1, int end = 100, string? numlist = null, int numunique = 0, int tz = -480)
         {
             if(count > 1000 || start < -9999999 || end > 999999999) return "Нельзя вводить количество больше 1000, а лимит меньше -9999999 и больше 999999999!";
             string num;
             if(numlist == null) num = await RunCurl($"--request POST --data \"count={count}&start={start}&end={end}&unique={numunique}&tz={tz}\" https://randstuff.ru/number/generate/");
-            else num = await RunCurl($"--request POST --data \"count={count}&start={start}&end={end}&list={numlist}&unique={numunique}&tz={tz}\" https://randstuff.ru/number/generate/");
+            else num = await RunCurl($"--request POST --data \"count={count}&from=list&list={numlist}&tz={tz}\" https://randstuff.ru/number/generate/");
 
             Number jsonNum = null;
             NumberList jsonNumList = null;
@@ -119,6 +130,15 @@ namespace RandstuffDesktop
             return jsonJoke.password;
         }
 
+        public async Task<Ticket> GetRandomTicket(int length = 8, int numbers = 0, int symbols = 0)
+        {
+            var joke = await RunCurl($"https://randstuff.ru/ticket/generate/");
+
+            var jsonJoke = JsonSerializer.Deserialize<Ticket>(joke);
+
+            return jsonJoke;
+        }
+
         public class JokeResp { public Joke joke { get; set; } public string share { get; set; } }
         public class Joke { public string id { get; set; } public string text { get; set; } }
         public class FactResp { public Fact fact { get; set; } public string share { get; set; } }
@@ -127,10 +147,13 @@ namespace RandstuffDesktop
         public class Saying { public string id { get; set; } public string text { get; set; } }
         public class AskResp { public Ask ask { get; set; } }
         public class Ask { public string prediction { get; set; } }
+        public class AnswerResp { public Answer answer { get; set; } }
+        public class Answer { public bool success { get; set; } public string correct { get; set; } }
         public class QuestionResp { public Question question { get; set; } }
         public class Question { public string id { get; set; } public string text { get; set; } public string answer1 { get; set; } public string answer2 { get; set; } public string answer3 { get; set; } public string answer4 { get; set; } }
         public class Password { public string password { get; set; } }
         public class Number { public int number { get; set; } public string save { get; set; } }
-        public class NumberList { public int[] number { get; set; } public string save { get; set; } }
+        public class NumberList { public string[] number { get; set; } public string save { get; set; } }
+        public class Ticket { public string ticket { get; set; } public bool lucky { get; set; } }
     }
 }

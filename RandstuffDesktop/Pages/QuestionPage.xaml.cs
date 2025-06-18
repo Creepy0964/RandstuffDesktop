@@ -20,23 +20,42 @@ namespace RandstuffDesktop.Pages
     /// </summary>
     public partial class QuestionPage : Page
     {
-        Randstuff rnd = new Randstuff();
+        private Randstuff randstuff = new();
+        private int currentQuestionId;
+
         public QuestionPage()
         {
             InitializeComponent();
-            Update();
-        }        
-
-        async void Update()
-        {
-            var q = await rnd.GetRandomQuestion();
-
-            qText.Text = $"ID: {q.id}\nВопрос: {q.text}";
+            LoadNewQuestion();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void LoadNewQuestion()
         {
-            Update();
+            var question = await randstuff.GetRandomQuestion();
+
+            currentQuestionId = int.Parse(question.id);
+            QuestionTextBlock.Text = question.text;
+            AnswerButton1.Content = question.answer1;
+            AnswerButton2.Content = question.answer2;
+            AnswerButton3.Content = question.answer3;
+            AnswerButton4.Content = question.answer4;
+        }
+
+        private async void AnswerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && int.TryParse(btn.Tag.ToString(), out int answerNumber))
+            {
+                var result = await randstuff.GetRandomAnswer(currentQuestionId, answerNumber);
+                if (int.Parse(result.correct) == answerNumber)
+                    MessageBox.Show("Правильно!", "Результат", MessageBoxButton.OK, MessageBoxImage.Information);
+                else
+                    MessageBox.Show("Неправильно!", "Результат", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void GenerateNewQuestionButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadNewQuestion();
         }
     }
 }

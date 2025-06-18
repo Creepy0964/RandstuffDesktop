@@ -20,9 +20,24 @@ namespace RandstuffDesktop.Pages
     /// </summary>
     public partial class AskPage : Page
     {
+        private Randstuff _randstuff = new Randstuff();
         public AskPage()
         {
             InitializeComponent();
+        }
+
+        private async void GenerateButton_Click(object sender, RoutedEventArgs e)
+        {
+            ResultTextBlock.Text = "Загрузка...";
+            try
+            {
+                string joke = await _randstuff.GetRandomAsk(QuestionTextBox.Text);
+                ResultTextBlock.Text = joke;
+            }
+            catch (Exception ex)
+            {
+                ResultTextBlock.Text = "Ошибка: " + ex.Message;
+            }
         }
     }
 }

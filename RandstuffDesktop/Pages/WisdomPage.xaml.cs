@@ -20,42 +20,25 @@ namespace RandstuffDesktop.Pages
     /// </summary>
     public partial class WisdomPage : Page
     {
-        Randstuff rnd = new Randstuff();
+        private Randstuff _randstuff = new Randstuff();
+
         public WisdomPage()
         {
             InitializeComponent();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            var text = await rnd.GetRandomWisdom();
-
-            wText.Text = text;
-        }
-
-        private void Navigate_Joke(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new JokePage());
-        }
-
-        private void Navigate_Fact(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new FactPage());
-        }
-
-        private void Navigate_Wisdom(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new WisdomPage());
-        }
-
-        private void Navigate_Ask(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new AskPage());
-        }
-
-        private void Navigate_Question(object sender, RoutedEventArgs e)
-        {
-            NavigationService.Navigate(new QuestionPage());
+            ResultTextBox.Text = "Загрузка...";
+            try
+            {
+                string joke = await _randstuff.GetRandomWisdom();
+                ResultTextBox.Text = joke;
+            }
+            catch (Exception ex)
+            {
+                ResultTextBox.Text = "Ошибка: " + ex.Message;
+            }
         }
     }
 }

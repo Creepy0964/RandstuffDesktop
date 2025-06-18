@@ -8,23 +8,25 @@ namespace RandstuffDesktop.Pages
     /// </summary>
     public partial class JokePage : Page
     {
-        Randstuff rnd = new Randstuff();
+        private Randstuff _randstuff = new Randstuff();
+
         public JokePage()
         {
             InitializeComponent();
-            Update();
         }
 
-        async void Update()
+        private async void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
-            var text = await rnd.GetRandomJoke();
-
-            jText.Text = text;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Update();
+            ResultTextBox.Text = "Загрузка...";
+            try
+            {
+                string joke = await _randstuff.GetRandomJoke();
+                ResultTextBox.Text = joke;
+            }
+            catch (Exception ex)
+            {
+                ResultTextBox.Text = "Ошибка: " + ex.Message;
+            }
         }
     }
 }
